@@ -4,7 +4,7 @@ http://localhost:5000/listvm
 
 http://localhost:5000/runingvm
 
-http://localhost:5000/infovm/<nombre_maquina>
+http://localhost:5000/infomv/<nombre_maquina>
 
 http://localhost:5000/vms/ram/<nombre_maquina>
 
