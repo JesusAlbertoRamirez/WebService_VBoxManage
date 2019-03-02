@@ -7,9 +7,7 @@ app = Flask(__name__)
 
 lista = []
 
-# 'VBoxManage list vms'
-# curl -i http://localhost:5000/listarvm
-#
+# Lista las Maquinas Virtuales que hay en el host
 @app.route('/listvm', methods=['GET'])
 def get_vmListas():
  bashCommand = ['VBoxManage', 'list', 'vms']
@@ -23,9 +21,7 @@ def get_vmListas():
       dicionario = "No hay maquinas virtuales creadas."
  return jsonify({'vms': dicionario})
 
-# 'VBoxManage list runningvms'
-# curl -i http://localhost:5000/runningvm
-#
+# Muestra la(s) maquinas(s) en ejecucion
 @app.route('/runningvm', methods=['GET'])
 def get_runing():
  bashCommand = ['VBoxManage', 'list' , 'runningvms']
@@ -33,9 +29,7 @@ def get_runing():
  salida = salida.decode('utf-8').split()
  return jsonify({'running': salida})
 
-# 'VBoxManage showvminfo'
-# curl -i http://localhost:5000/infovm/<name vm>
-#
+# Muestra la informacion de la Maquina Virtual
 @app.route('/infomv/<string:namevm>')
 def showvminfo(namevm):
  bashCommand = ['VBoxManage', 'showvminfo', namevm ]
@@ -43,9 +37,7 @@ def showvminfo(namevm):
  salida = salida.decode('utf-8').split()
  return jsonify({'infomv': salida})
 
-# 'VBoxManage showvminfo'
-# curl -i http://localhost:5000/infovm/<name vm>
-#
+# Muestra la RAM
 @app.route('/vms/ram/<string:vm>')
 def ram(vm):
  output = subprocess.Popen(['vboxmanage', 'showvminfo', vm ], stdout = subprocess.PIPE)
@@ -53,9 +45,7 @@ def ram(vm):
  str = tail.decode('utf-8').splitlines()
  return jsonify({'list': str})
 
-# 'VBoxManage showvminfo'
-# curl -i http://localhost:5000/infovm/<name vm>
-#
+# Muestra los Adaptadores de red
 @app.route('/vms/nic/<string:vm>')
 def nic(vm):
  output = subprocess.Popen(['vboxmanage', 'showvminfo', vm ], stdout = subprocess.PIPE)
@@ -64,14 +54,26 @@ def nic(vm):
  out = subprocess.check_output(['wc', '-l'], stdin = tail.stdout).decode('utf-8')
  return jsonify({'list': out})
 
-# 'vboxmanage', 'modifyvm', vm, '--cpus' , cpu 
-# curl -i http://localhost:5000/infovm/<name vm>
-#
-@app.route('/vms/modifiy/<string:vm>/<string:cpu>')
-def modif(vm, cpu):
+# Modifica la CPUs
+@app.route('/vms/modifiy/cpu/<string:vm>/<string:cpu>')
+def modifCpu(vm, cpu):
  subprocess.run(['vboxmanage', 'modifyvm', vm, '--cpus' , cpu ])
 
- return "Se cambio a la maquina virtual "
+ return "Se modifico el numero de CPUs de la maquina virtual "
+
+# Modifica la RAM
+@app.route('/vms/modifiy/ram/<string:vm>/<string:ram>')
+def modifRam(vm, ram):
+ subprocess.run(['vboxmanage', 'modifyvm', vm, '--memory' , ram ])
+
+ return "Se modifico el numero de RAM de la maquina virtual "
+
+# Modifica el limite de ejecucion del porcesador(es)
+@app.route('/vms/modifiy/limcpu/<string:vm>/<string:porc>')
+def modifLimCpu(vm, porc):
+ subprocess.run(['vboxmanage', 'modifyvm', vm, '--cpuexecutioncap' , porc ])
+
+ return "Se modifico el pocentaje liminte de ejecucion del procesador(es) de la maquina virtual "
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
