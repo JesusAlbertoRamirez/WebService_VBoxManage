@@ -55,21 +55,21 @@ def nic(vm):
  return jsonify({'list': out})
 
 # Modifica la CPUs
-@app.route('/vms/modifiy/cpu/<string:vm>/<string:cpu>')
+@app.route('/vms/modify/cpu/<string:vm>/<string:cpu>')
 def modifCpu(vm, cpu):
  subprocess.run(['vboxmanage', 'modifyvm', vm, '--cpus' , cpu ])
 
  return "Se modifico el numero de CPUs de la maquina virtual "
 
 # Modifica la RAM
-@app.route('/vms/modifiy/ram/<string:vm>/<string:ram>')
+@app.route('/vms/modify/ram/<string:vm>/<string:ram>')
 def modifRam(vm, ram):
  subprocess.run(['vboxmanage', 'modifyvm', vm, '--memory' , ram ])
 
  return "Se modifico el numero de RAM de la maquina virtual "
 
 # Modifica el limite de ejecucion del porcesador(es)
-@app.route('/vms/modifiy/limcpu/<string:vm>/<string:porc>')
+@app.route('/vms/modify/limcpu/<string:vm>/<string:porc>')
 def modifLimCpu(vm, porc):
  subprocess.run(['vboxmanage', 'modifyvm', vm, '--cpuexecutioncap' , porc ])
 
