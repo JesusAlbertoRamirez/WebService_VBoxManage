@@ -49,8 +49,8 @@ def ram(vm):
 @app.route('/vms/nic/<string:vm>')
 def nic(vm):
  output = subprocess.Popen(['vboxmanage', 'showvminfo', vm ], stdout = subprocess.PIPE)
- holi = subprocess.Popen(['grep', 'NIC'], stdin = output.stdout, stdout = subprocess.PIPE)
- tail = subprocess.Popen(['grep', 'MAC'], stdin = holi.stdout, stdout = subprocess.PIPE)
+ outputNic = subprocess.Popen(['grep', 'NIC'], stdin = output.stdout, stdout = subprocess.PIPE)
+ tail = subprocess.Popen(['grep', 'MAC'], stdin = outputNic.stdout, stdout = subprocess.PIPE)
  out = subprocess.check_output(['wc', '-l'], stdin = tail.stdout).decode('utf-8')
  return jsonify({'list': out})
 
