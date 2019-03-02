@@ -10,8 +10,8 @@ http://localhost:5000/vms/ram/<nombre_maquina>
 
 http://localhost:5000/vms/nic/<nombre_maquina>
 
-http://localhost:5000/vms/modify/cpu/<nombre_maquina>/<cpu>
+http://localhost:5000/vms/modify/cpu/<nombre_maquina>/<cant_cpu>
 
-http://localhost:5000/vms/modify/ram/<nombre_maquina>/<ram>
+http://localhost:5000/vms/modify/ram/<nombre_maquina>/<cant_ram>
 
-http://localhost:5000/vms/modify/limcpu/<nombre_maquina>/<porc>
+http://localhost:5000/vms/modify/limcpu/<nombre_maquina>/<cant_porc>
